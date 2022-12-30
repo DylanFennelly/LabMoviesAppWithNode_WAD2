@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from '@mui/material/styles';
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { AuthContext} from "../../contexts/authContext";
 
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -30,6 +31,10 @@ const SiteHeader = ({ history }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navigate = useNavigate();
+
+  const authContext = useContext(AuthContext)
+
+
 
   //for separate drop down menus on desktop view
   const movieOptions = [
@@ -225,6 +230,19 @@ const SiteHeader = ({ history }) => {
                   </MenuItem>
                 ))}
               </Menu>
+              {authContext.isAuthenticated ? (
+              <Button
+                color="inherit">
+                Logout
+              </Button>
+              ) : (
+              <Button
+                id="login-button"
+                onClick={() => handleMenuSelect("/login")}
+                color="inherit">
+                Login
+              </Button>
+              )}
             </>
           )}
         </Toolbar>

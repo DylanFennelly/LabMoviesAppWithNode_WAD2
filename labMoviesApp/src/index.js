@@ -27,6 +27,7 @@ import FantasyMoviesContextProvider from "./contexts/fantasyMoviesContext";
 import AddFantasyMoviePage from "./pages/addFantasyMoviePage";
 import FantasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
 import LoginPage from "./pages/loginPage";
+import AuthContextProvider from "./contexts/authContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,34 +43,36 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <SiteHeader />
         <MoviesContextProvider>
           <TVContextProvider>
             <ActorsContextProvider>
+              <AuthContextProvider>
               <FantasyMoviesContextProvider>
-                <Routes>
-                  <Route exact path="/movies/favourites" element={<FavouriteMoviesPage />} />
-                  <Route path="/movies/:id" element={<MoviePage />} />
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                  <Route path="/reviews/:id" element={<MovieReviewPage />} />
-                  <Route path="/movies/upcoming" element={<UpcomingPage />} />
-                  <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-                  <Route path="/movies/mustwatch" element={<MustWatchMoviesPage />} />
-                  <Route path="/movies/top" element={<TopMoviesPage />} />
-                  <Route path="/tv" element={<DiscoverTVPage />} />
-                  <Route path="/tv/:id" element={<TVDetailsPage />} />
-                  <Route path="/tv/reviews/:id" element={<TVReviewPage />} />
-                  <Route path="/tv/favourites" element={<FavouriteTVPage />} />
-                  <Route path="/actors" element={<PopularActorsPage />} />
-                  <Route path="/actors/:id" element={<ActorDetailsPage />} />
-                  <Route path="/actors/favourites" element={<FavouriteActorsPage />} />
-                  <Route path="/movies/fantasy" element={<FantasyMoviesPage />} />
-                  <Route path="/movies/fantasy/new" element={<AddFantasyMoviePage />} />
-                  <Route path="/movies/fantasy/:id" element={<FantasyMovieDetailsPage />} />
-                  <Route path="/login" element={<LoginPage />} />
-                </Routes>
-              </FantasyMoviesContextProvider>
+              <SiteHeader />
+                  <Routes>
+                    <Route exact path="/movies/favourites" element={<FavouriteMoviesPage />} />
+                    <Route path="/movies/:id" element={<MoviePage />} />
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                    <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                    <Route path="/movies/upcoming" element={<UpcomingPage />} />
+                    <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+                    <Route path="/movies/mustwatch" element={<MustWatchMoviesPage />} />
+                    <Route path="/movies/top" element={<TopMoviesPage />} />
+                    <Route path="/tv" element={<DiscoverTVPage />} />
+                    <Route path="/tv/:id" element={<TVDetailsPage />} />
+                    <Route path="/tv/reviews/:id" element={<TVReviewPage />} />
+                    <Route path="/tv/favourites" element={<FavouriteTVPage />} />
+                    <Route path="/actors" element={<PopularActorsPage />} />
+                    <Route path="/actors/:id" element={<ActorDetailsPage />} />
+                    <Route path="/actors/favourites" element={<FavouriteActorsPage />} />
+                    <Route path="/movies/fantasy" element={<FantasyMoviesPage />} />
+                    <Route path="/movies/fantasy/new" element={<AddFantasyMoviePage />} />
+                    <Route path="/movies/fantasy/:id" element={<FantasyMovieDetailsPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                  </Routes>
+                </FantasyMoviesContextProvider>
+              </AuthContextProvider>
             </ActorsContextProvider>
           </TVContextProvider>
         </MoviesContextProvider>
