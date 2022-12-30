@@ -3,31 +3,35 @@ import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link"
 
 import { AuthContext } from "../../contexts/authContext"
 
 //TODO: Error message for failed login, wrong password
 
 const TemplateLoginPage = props => {
-  const context = useContext(AuthContext)
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+    const context = useContext(AuthContext)
+    const [userName, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordAgain, setPasswordAgain] = useState("");
+    const [registered, setRegistered] = useState(false);
 
-  const login = () => {
-    context.authenticate(username, password);
-  };
+  const register = () => {
+    if (password.length > 0 && password === passwordAgain) {
+      context.register(userName, password);
+      setRegistered(true);
+    }
+  }
 
-  if (context.isAuthenticated === true) {
-    return <Navigate to={"/"} />;
+  if (registered === true) {
+    return <Navigate to={"/login"} />;
   }
   return (
     <>
         <Box component ="div" pt={10} sx={{ display: 'flex', justifyContent: 'center'}}>
           <Typography component="h2" variant="h3">
-            Log in to TMDB Client
+            Sign up for TMDB Client
           </Typography>
         </Box>
         <Box component ="div" pt={5} sx={{ display: 'flex', justifyContent: 'center'}}>
@@ -36,7 +40,7 @@ const TemplateLoginPage = props => {
             label="Username"
            type="text"
            autoFocus
-           onChange={e => {setUsername(e.target.value)}}
+           onChange={e => {setUserName(e.target.value)}}
           />
         </Box>
         <Box component ="div" pt={1} sx={{ display: 'flex', justifyContent: 'center'}}>
@@ -49,22 +53,25 @@ const TemplateLoginPage = props => {
           />
         </Box>
         <Box component ="div" pt={1} sx={{ display: 'flex', justifyContent: 'center'}}>
+          <TextField
+            id="password-again"
+            label="Confirm Password"
+            type="password"
+            autoComplete="current-password"
+            onChange={e => {setPasswordAgain(e.target.value)}}
+          />
+        </Box>
+        <Box component ="div" pt={1} sx={{ display: 'flex', justifyContent: 'center'}}>
           <Button
           variant="contained"
           color="primary"
-          onClick={login}
+          onClick={register}
           >
-            Log in
+            Sign Up
           </Button>
         </Box>
-        <Box component ="div" pt={3} sx={{ display: 'flex', justifyContent: 'center'}}>
-          <Typography>
-            Not registered? 
-          </Typography>
-          <Link href="/signup">
-            Sign up here!
-          </Link>
-        </Box>
+
+
         
     </>
   );

@@ -28,6 +28,7 @@ import AddFantasyMoviePage from "./pages/addFantasyMoviePage";
 import FantasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
 import LoginPage from "./pages/loginPage";
 import AuthContextProvider from "./contexts/authContext";
+import SignUpPage from "./pages/signupPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -70,6 +71,7 @@ const App = () => {
                     <Route path="/movies/fantasy/new" element={<AddFantasyMoviePage />} />
                     <Route path="/movies/fantasy/:id" element={<FantasyMovieDetailsPage />} />
                     <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
                   </Routes>
                 </FantasyMoviesContextProvider>
               </AuthContextProvider>
