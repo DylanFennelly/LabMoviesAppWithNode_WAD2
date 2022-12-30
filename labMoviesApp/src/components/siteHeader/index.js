@@ -69,6 +69,8 @@ const SiteHeader = ({ history }) => {
     { label: "Favourite Actors", path: "/actors/favourites" },
   ];
 
+  
+
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL, { replace: true });
   };
@@ -89,6 +91,13 @@ const SiteHeader = ({ history }) => {
     setAnchorMobile(event.currentTarget);
   };
 
+  const handleLogoutSelection = (pageURL) => {
+    authContext.authToken = null;
+    authContext.isAuthenticated  = false;
+    authContext.userName = "";
+    handleMenuSelect(pageURL);
+  }
+
   return (
     <>
       <AppBar position="fixed" color="secondary">
@@ -96,9 +105,16 @@ const SiteHeader = ({ history }) => {
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             TMDB Client
           </Typography>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          {authContext.isAuthenticated ? (
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            Greetings, {authContext.userName}
+          </Typography>
+          ) : (
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
             All you ever wanted to know about Movies, TV and more!
           </Typography>
+          
+          ) }
           {isMobile ? (
             <>
               <IconButton
@@ -231,17 +247,22 @@ const SiteHeader = ({ history }) => {
                 ))}
               </Menu>
               {authContext.isAuthenticated ? (
-              <Button
-                color="inherit">
-                Logout
-              </Button>
+                <>
+                
+                <Button
+                  onClick={() => handleLogoutSelection("/")}
+                  color="inherit">
+                  Logout
+                </Button>
+              </>
               ) : (
-              <Button
+                <Button
                 id="login-button"
                 onClick={() => handleMenuSelect("/login")}
                 color="inherit">
                 Login
               </Button>
+              
               )}
             </>
           )}

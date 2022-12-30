@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 
 import { AuthContext } from "../../contexts/authContext"
 
+//TODO: Error message for failed login, wrong password
 
 const TemplateLoginPage = props => {
   const context = useContext(AuthContext)
@@ -18,13 +19,9 @@ const TemplateLoginPage = props => {
     context.authenticate(username, password);
   };
 
-    // Set 'from' to path where browser is redirected after a successful login.
-  // Either / or the protected path user tried to access.
-  // const { from } = props.location.state || { from: { pathname: "/" } };
-
-  // if (context.isAuthenticated === true) {
-  //   return <Navigate to={from} />;
-  // }
+  if (context.isAuthenticated === true) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <>
         <Box component ="div" pt={10} sx={{ display: 'flex', justifyContent: 'center'}}>
