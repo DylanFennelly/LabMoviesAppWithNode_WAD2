@@ -29,6 +29,7 @@ import FantasyMovieDetailsPage from "./pages/fantasyMovieDetailsPage";
 import LoginPage from "./pages/loginPage";
 import AuthContextProvider from "./contexts/authContext";
 import SignUpPage from "./pages/signupPage";
+import PrivateRoute from "./privateRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,7 +52,7 @@ const App = () => {
               <FantasyMoviesContextProvider>
               <SiteHeader />
                   <Routes>
-                    <Route exact path="/movies/favourites" element={<FavouriteMoviesPage />} />
+                    <Route exact path="/movies/favourites" element={ <PrivateRoute><FavouriteMoviesPage /> </PrivateRoute>} />
                     <Route path="/movies/:id" element={<MoviePage />} />
                     <Route path="/" element={<HomePage />} />
                     <Route path="*" element={<Navigate to="/" />} />

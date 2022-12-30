@@ -18,6 +18,7 @@ const TemplateLoginPage = props => {
 
   const login = () => {
     context.authenticate(username, password);
+    
   };
 
   if (context.isAuthenticated === true) {
