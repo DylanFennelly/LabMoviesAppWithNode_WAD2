@@ -60,44 +60,42 @@ router.get('/:userName/favourites', asyncHandler( async (req, res) => {
   }));
 
 
-//TODO: make work without using movieModel (queryAPI)
-
 //Add a favourite
-// router.post('/:userName/favourites', asyncHandler(async (req, res) => {
-//     const newFavourite = req.body.id;
-//     const userName = req.params.userName;
-//     const movie = await movieModel.findByMovieDBId(newFavourite);
-//     const user = await User.findByUserName(userName);
+router.post('/:userName/favourites', asyncHandler(async (req, res) => {
+    const newFavourite = req.body.id;
+    const userName = req.params.userName;
+    const user = await User.findByUserName(userName);
 
-//     console.log(newFavourite)
-//     console.log(userName)
-//     console.log(movie)
-//     console.log(user)
+    // console.log(newFavourite)
+    // console.log(userName)
+    // console.log(user)
 
-//     if ( await user.favourites.includes(movie._id)){
-//         res.status(401).json({code: 401,msg: 'Movie is already in user\'s favourites.'});
-//     }else{
-//         await user.favourites.push(movie._id);
-//         await user.save(); 
-//         res.status(201).json(user); 
-//     }
-//   }));
+    if (newFavourite === undefined) {
+      res.status(401).json({success: false, msg: 'Please pass movie id.'});
+      return next();
+    }
+    if ( await user.favourites.includes(newFavourite)){
+        res.status(401).json({code: 401,msg: 'Movie is already in user\'s favourites.'});
+    }else{
+        await user.favourites.push(newFavourite);
+        await user.save(); 
+        res.status(201).json(user); 
+    }
+  }));
 
 
-// router.delete('/:userName/favourites', asyncHandler(async (req, res) => {
-//     const favouriteToDel = req.body.id;
-//     const userName = req.params.userName;
-//     const movie = await movieModel.findByMovieDBId(favouriteToDel);
-//     const user = await User.findByUserName(userName);
+router.delete('/:userName/favourites', asyncHandler(async (req, res) => {
+    const favouriteToDel = req.body.id;
+    const userName = req.params.userName;
+    const user = await User.findByUserName(userName);
 
-//     console.log(favouriteToDel)
-//     console.log(userName)
-//     console.log(movie)
-//     console.log(user)
+    // console.log(favouriteToDel)
+    // console.log(userName)
+    // console.log(user)
 
-//     await user.favourites.pull(movie._id);
-//     await user.save(); 
-//     res.status(201).json(user); 
-//   }));
+    await user.favourites.pull(favouriteToDel);
+    await user.save(); 
+    res.status(201).json(user); 
+  }));
 
 export default router;

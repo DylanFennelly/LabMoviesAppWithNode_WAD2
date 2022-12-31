@@ -13,6 +13,7 @@ const MoviesContextProvider = (props) => {
       newFavourites.push(movie.id);
     }
     setFavourites(newFavourites);
+    console.log(favourites)
   };
 
   const removeFromFavourites = (movie) => {
