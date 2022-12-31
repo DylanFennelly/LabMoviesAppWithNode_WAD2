@@ -10,18 +10,22 @@ import AddToFavouritesIcon from "../cardIcons/addToFavourites";
 import RemoveFromFavouritesIcon from "../cardIcons/removeFromFavourites"
 
 import { MoviesContext } from "../../contexts/moviesContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const MovieHeader = (props) => {
   const movie = props.movie;
   const navigate = useNavigate();
   const context = useContext(MoviesContext);
+  const authContext = useContext(AuthContext)
 
   //changes icon and function depending on favourites state of movie
   function favouritesState(movie) {
-    if (!context.favourites.includes(movie.id)) {
-      return <AddToFavouritesIcon movie={movie} />
-    } else {
-      return <RemoveFromFavouritesIcon movie={movie} />
+    if (authContext.isAuthenticated){
+      if (!context.favourites.includes(movie.id)) {
+        return <AddToFavouritesIcon movie={movie} />
+      } else {
+        return <RemoveFromFavouritesIcon movie={movie} />
+      }
     }
   }
 
