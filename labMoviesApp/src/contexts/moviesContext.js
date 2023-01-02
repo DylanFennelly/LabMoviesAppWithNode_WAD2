@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { getFavourites, addFavourites, removeFavourite } from "../api/movie-api";
+import { AuthContext } from "./authContext";
 
 export const MoviesContext = React.createContext(null);
 
@@ -7,19 +9,31 @@ const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState({})
   const [mustWatch, setMustWatch] = useState([])
 
-  const addToFavourites = (movie) => {
-    let newFavourites = [...favourites];
-    if (!favourites.includes(movie.id)) {
-      newFavourites.push(movie.id);
-    }
-    setFavourites(newFavourites);
-    console.log(favourites)
+  const context = useContext(AuthContext)
+
+  // useEffect(() => {
+  //   loadFavourites()
+  // }, [])
+
+  function loadFavourites(){
+    getFavourites(context.userName).then(result =>{
+      setFavourites(result)
+    })
+  }
+
+  const addToFavourites = (movidID) => {
+    addFavourites(context.userName, movidID)
+    loadFavourites()
   };
 
-  const removeFromFavourites = (movie) => {
-    setFavourites(favourites.filter(
-      (mId) => mId !== movie.id
-    ))
+  const removeFromFavourites = (movieID) => {
+    // setFavourites(favourites.filter(
+    //   (mId) => mId !== movie.id
+    // ))
+    // loadFavourites()
+    removeFavourite(context.userName, movieID)
+    loadFavourites()
+
   };
 
   const addReview = (movie, review) => {
@@ -45,13 +59,15 @@ const MoviesContextProvider = (props) => {
     <MoviesContext.Provider
       value={{
         favourites,
+        setFavourites,
         addToFavourites,
         removeFromFavourites,
         addReview,
         addToMustWatch,
         mustWatch,
         removeFromMustWatch,
-        myReviews
+        myReviews,
+        loadFavourites
       }}
     >
       {props.children}
