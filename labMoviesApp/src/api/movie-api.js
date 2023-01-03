@@ -74,3 +74,15 @@ export const removeFavourite = (username, movieId) =>  {
     ).then(res => res.json());
   };
 
+  export const getTVGenres = () => {
+    return fetch(
+        '/api/genres/tv'
+    ).then(res => res.json());
+  };
+
+  export const getPopularActors = () => {
+    return fetch(
+       '/api/movies/tmdb/actors'
+    ).then(res => res.json());
+  };
+

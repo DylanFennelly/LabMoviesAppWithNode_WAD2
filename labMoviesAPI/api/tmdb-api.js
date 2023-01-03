@@ -42,3 +42,33 @@ export const getDiscoverTV = () => {
         });
 };
 
+export const getPopularActors = () => {
+    return fetch(
+        `https://api.themoviedb.org/3/person/popular?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    })
+        .catch((error) => {
+            throw error
+        });
+};
+
+export const getTVGenres = async () => {
+    return fetch(
+      "https://api.themoviedb.org/3/genre/tv/list?api_key=" +
+      process.env.TMDB_KEY +
+      "&language=en-US"
+    ).then((response) => {
+      if (!response.ok) {
+        throw new Error(response.json().message);
+      }
+      return response.json();
+    })
+      .catch((error) => {
+        throw error
+      });
+  };
+

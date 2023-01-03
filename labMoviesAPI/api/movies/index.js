@@ -3,7 +3,7 @@ import { movieReviews } from './moviesData';
 import uniqid from 'uniqid';
 import movieModel from './movieModel';
 import asyncHandler from 'express-async-handler';
-import { getUpcomingMovies, getTopMovies, getDiscoverTV } from '../tmdb-api';
+import { getUpcomingMovies, getTopMovies, getDiscoverTV, getPopularActors } from '../tmdb-api';
 
 const router = express.Router(); 
 router.get('/', asyncHandler(async (req, res) => {
@@ -80,6 +80,12 @@ router.get('/tmdb/top', asyncHandler( async(req, res) => {
 router.get('/tmdb/tv', asyncHandler( async(req, res) => {
     const tvs = await getDiscoverTV();
     res.status(200).json(tvs);
+  }));
+
+      //get popular actors
+router.get('/tmdb/actors', asyncHandler( async(req, res) => {
+    const actors = await getPopularActors();
+    res.status(200).json(actors);
   }));
 
 export default router;
