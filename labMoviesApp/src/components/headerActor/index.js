@@ -9,18 +9,22 @@ import AddToActorFavouritesIcon from "../cardIcons/addToActorFavourites";
 import RemoveFromActorFavouritesIcon from "../cardIcons/removeFromActorFavourites";
 
 import { ActorContext } from "../../contexts/actorsContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const ActorHeader = (props) => {
   const actor = props.actor;
   const navigate = useNavigate();
   const context = useContext(ActorContext);
+  const authContext = useContext(AuthContext)
 
   //changes icon and function depending on favourites state of actor
   function favouritesState(actor) {
-    if (!context.favourites.includes(actor.id)) {
-      return <AddToActorFavouritesIcon actor={actor} />
-    } else {
-      return <RemoveFromActorFavouritesIcon actor={actor} />
+    if (authContext.isAuthenticated){
+      if (!context.favourites.includes(actor.id)) {
+        return <AddToActorFavouritesIcon actor={actor} />
+      } else {
+        return <RemoveFromActorFavouritesIcon actor={actor} />
+      }
     }
   }
 

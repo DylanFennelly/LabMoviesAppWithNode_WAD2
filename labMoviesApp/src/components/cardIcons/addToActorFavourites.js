@@ -8,7 +8,8 @@ const AddToActorFavouritesIcon = ({ actor }) => {
 
   const handleAddToFavourites = (e) => {
     e.preventDefault();
-    context.addToFavourites(actor);
+    context.addToFavourites(actor.id);
+    context.loadFavourites();
   };
 
   return (

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { getActorFavourites, addActorFavourites, removeActorFavourite } from "../api/movie-api";
+import { AuthContext } from "./authContext";
 
 export const ActorContext = React.createContext(null);
 
@@ -7,26 +9,25 @@ const ActorContextProvider = (props) => {
   //for displaying in fantasyMovie with name
   const [favouritesWithNames, setFavouritesWithNames] = useState([])
 
-  const addToFavourites = (actor) => {
-    let newFavourites = [...favourites];
-    let newFavouritesWithName = [...favouritesWithNames]
-    if (!favourites.includes(actor.id)) {
-      newFavourites.push(actor.id);
-      newFavouritesWithName.push({
-        id: actor.id,
-        name: actor.name
-      })
-    }
-    setFavourites(newFavourites);
-    setFavouritesWithNames(newFavouritesWithName)
+  const context = useContext(AuthContext)
+
+  function loadFavourites(){
+    getActorFavourites(context.userName).then(result =>{
+      setFavourites(result)
+      setFavouritesWithNames(result)
+    })
+  }
+
+  const addToFavourites = (actorID) => {
+    addActorFavourites(context.userName, actorID)
+    loadFavourites()
   };
 
-  const removeFromFavourites = (actor) => {
-    setFavourites(favourites.filter(
-      (tId) => tId !== actor.id
-    ))
+  const removeFromFavourites = (actorID) => {
+    removeActorFavourite(context.userName, actorID)
+    loadFavourites()
 
-    const i = favouritesWithNames.findIndex(a => a.id === actor.id);
+    const i = favouritesWithNames.findIndex(a => a.id === actorID);
     if (i > -1) {
       favouritesWithNames.splice(i, 1)
       setFavouritesWithNames(favouritesWithNames)
@@ -39,7 +40,8 @@ const ActorContextProvider = (props) => {
         favourites,
         addToFavourites,
         removeFromFavourites,
-        favouritesWithNames
+        favouritesWithNames,
+        loadFavourites
       }}
     >
       {props.children}

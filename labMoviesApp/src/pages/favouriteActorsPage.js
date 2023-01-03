@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateFavouriteActorsListPage";
 import { ActorContext } from "../contexts/actorsContext";
 import { useQueries } from "react-query";
@@ -8,6 +8,11 @@ import RemoveFromActorFavourites from "../components/cardIcons/removeFromActorFa
 
 const FavouriteActorsPage = () => {
   const { favourites: actorIds } = useContext(ActorContext);
+  const context = useContext (ActorContext)
+
+  useEffect(() => {
+    context.loadFavourites()
+  }, [])
 
   // Create an array of queries and run in parallel.
   const favouriteActorQueries = useQueries(

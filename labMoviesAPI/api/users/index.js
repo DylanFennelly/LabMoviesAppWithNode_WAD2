@@ -149,4 +149,53 @@ router.delete('/:userName/tvFavourites', asyncHandler(async (req, res) => {
 }));
 
 
+
+  
+//actor favourites
+
+router.get('/:userName/actorFavourites', asyncHandler( async (req, res) => {
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName).populate('actorFavourites');
+  res.status(200).json(user.actorFavourites);
+}));
+
+
+//Add a favourite
+router.post('/:userName/actorFavourites', asyncHandler(async (req, res) => {
+  const newFavourite = req.body.id;
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName);
+
+  // console.log(newFavourite)
+  // console.log(userName)
+  // console.log(user)
+
+  if (newFavourite === undefined) {
+    res.status(401).json({success: false, msg: 'Please pass actor id.'});
+    return next();
+  }
+  if ( await user.actorFavourites.includes(newFavourite)){
+      res.status(401).json({code: 401,msg: 'Actor is already in user\'s favourites.'});
+  }else{
+      await user.actorFavourites.push(newFavourite);
+      await user.save(); 
+      res.status(201).json(user); 
+  }
+}));
+
+
+router.delete('/:userName/actorFavourites', asyncHandler(async (req, res) => {
+  const favouriteToDel = req.body.id;
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName);
+
+  // console.log(favouriteToDel)
+  // console.log(userName)
+  // console.log(user)
+
+  await user.actorFavourites.pull(favouriteToDel);
+  await user.save(); 
+  res.status(201).json(user); 
+}));
+
 export default router;

@@ -112,3 +112,29 @@ export const removeTVFavourite = (username, tvId) =>  {
     }).then(res => res.json())
   }
 
+
+  export const getActorFavourites = (username) => {
+    // console.log("getFavourites")
+    return fetch('/api/users/'+username+'/actorFavourites').then(res => res.json())
+}
+
+export const addActorFavourites = (username, actorId) => {
+    return fetch('/api/users/'+username+'/ActorFavourites',{
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({id: actorId})
+    }).then(res => res.json())
+}
+
+export const removeActorFavourite = (username, actorId) =>  {
+    return fetch('/api/users/'+username+'/actorFavourites',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'delete',
+      body: JSON.stringify({id: actorId})
+    }).then(res => res.json())
+  }
+
