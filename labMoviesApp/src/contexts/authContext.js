@@ -32,6 +32,7 @@ const AuthContextProvider = (props) => {
   };
 
   const signout = () => {
+    setIsAuthenticated(false)   //neccesary to fix a slow response time bug on slower machines
     setTimeout(() => setIsAuthenticated(false), 100);
   }
 
