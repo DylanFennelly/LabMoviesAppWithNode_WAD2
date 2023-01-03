@@ -43,3 +43,15 @@ export const removeFavourite = (username, movieId) =>  {
       body: JSON.stringify({id: movieId})
     }).then(res => res.json())
   }
+
+  export const getMovies = () => {
+    return fetch(
+       '/api/movies'
+    ).then(res => res.json());
+  };
+
+  export const getGenres = () => {
+    return fetch(
+       '/api/genres'
+    ).then(res => res.json());
+  };
