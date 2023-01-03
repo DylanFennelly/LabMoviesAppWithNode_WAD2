@@ -61,3 +61,9 @@ export const removeFavourite = (username, movieId) =>  {
        '/api/movies/tmdb/upcoming'
     ).then(res => res.json());
   };
+
+  export const getTopMovies = () => {
+    return fetch(
+       '/api/movies/tmdb/top'
+    ).then(res => res.json());
+  };
