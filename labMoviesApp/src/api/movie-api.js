@@ -138,3 +138,28 @@ export const removeActorFavourite = (username, actorId) =>  {
     }).then(res => res.json())
   }
 
+  export const getMustWatch = (username) => {
+    // console.log("getFavourites")
+    return fetch('/api/users/'+username+'/mustwatch').then(res => res.json())
+}
+
+export const addMustWatch = (username, movieId) => {
+    return fetch('/api/users/'+username+'/mustwatch',{
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({id: movieId})
+    }).then(res => res.json())
+}
+
+export const removeMustWatch = (username, movieId) =>  {
+    return fetch('/api/users/'+username+'/mustwatch',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'delete',
+      body: JSON.stringify({id: movieId})
+    }).then(res => res.json())
+  }
+

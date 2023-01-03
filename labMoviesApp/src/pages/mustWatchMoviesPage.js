@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
@@ -8,7 +8,11 @@ import RemoveFromMustWatch from "../components/cardIcons/removeFromMustWatch";
 
 const MustWatchMoviesPage = () => {
   const { mustWatch: movieIds } = useContext(MoviesContext);
+  const context = useContext (MoviesContext)
 
+  useEffect(() => {
+    context.loadMustWatch()
+  }, [])
   // Create an array of queries and run in parallel.
   const mustWatchMovieQueries = useQueries(
     movieIds.map((movieId) => {

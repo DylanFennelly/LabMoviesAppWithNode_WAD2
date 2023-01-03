@@ -60,7 +60,7 @@ const App = () => {
                     <Route path="/reviews/:id" element={<MovieReviewPage />} />
                     <Route path="/movies/upcoming" element={<UpcomingPage />} />
                     <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-                    <Route path="/movies/mustwatch" element={<MustWatchMoviesPage />} />
+                    <Route path="/movies/mustwatch" element={<PrivateRoute><MustWatchMoviesPage /></PrivateRoute> } />
                     <Route path="/movies/top" element={<TopMoviesPage />} />
                     <Route path="/tv" element={<DiscoverTVPage />} />
                     <Route path="/tv/:id" element={<TVDetailsPage />} />
@@ -68,7 +68,7 @@ const App = () => {
                     <Route path="/tv/favourites" element={<PrivateRoute><FavouriteTVPage /></PrivateRoute> } />
                     <Route path="/actors" element={<PopularActorsPage />} />
                     <Route path="/actors/:id" element={<ActorDetailsPage />} />
-                    <Route path="/actors/favourites" element={<FavouriteActorsPage />} />
+                    <Route path="/actors/favourites" element={<PrivateRoute><FavouriteActorsPage /> </PrivateRoute>} />
                     <Route path="/movies/fantasy" element={<FantasyMoviesPage />} />
                     <Route path="/movies/fantasy/new" element={<AddFantasyMoviePage />} />
                     <Route path="/movies/fantasy/:id" element={<FantasyMovieDetailsPage />} />

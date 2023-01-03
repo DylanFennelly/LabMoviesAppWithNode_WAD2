@@ -66,9 +66,6 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const userName = req.params.userName;
     const user = await User.findByUserName(userName);
 
-    // console.log(newFavourite)
-    // console.log(userName)
-    // console.log(user)
 
     if (newFavourite === undefined) {
       res.status(401).json({success: false, msg: 'Please pass movie id.'});
@@ -88,10 +85,6 @@ router.delete('/:userName/favourites', asyncHandler(async (req, res) => {
     const favouriteToDel = req.body.id;
     const userName = req.params.userName;
     const user = await User.findByUserName(userName);
-
-    // console.log(favouriteToDel)
-    // console.log(userName)
-    // console.log(user)
 
     await user.favourites.pull(favouriteToDel);
     await user.save(); 
@@ -116,9 +109,6 @@ router.post('/:userName/tvFavourites', asyncHandler(async (req, res) => {
   const userName = req.params.userName;
   const user = await User.findByUserName(userName);
 
-  // console.log(newFavourite)
-  // console.log(userName)
-  // console.log(user)
 
   if (newFavourite === undefined) {
     res.status(401).json({success: false, msg: 'Please pass tv id.'});
@@ -138,10 +128,6 @@ router.delete('/:userName/tvFavourites', asyncHandler(async (req, res) => {
   const favouriteToDel = req.body.id;
   const userName = req.params.userName;
   const user = await User.findByUserName(userName);
-
-  // console.log(favouriteToDel)
-  // console.log(userName)
-  // console.log(user)
 
   await user.tvFavourites.pull(favouriteToDel);
   await user.save(); 
@@ -164,11 +150,6 @@ router.get('/:userName/actorFavourites', asyncHandler( async (req, res) => {
 router.post('/:userName/actorFavourites', asyncHandler(async (req, res) => {
   const newFavourite = req.body.id;
   const userName = req.params.userName;
-  const user = await User.findByUserName(userName);
-
-  // console.log(newFavourite)
-  // console.log(userName)
-  // console.log(user)
 
   if (newFavourite === undefined) {
     res.status(401).json({success: false, msg: 'Please pass actor id.'});
@@ -189,9 +170,6 @@ router.delete('/:userName/actorFavourites', asyncHandler(async (req, res) => {
   const userName = req.params.userName;
   const user = await User.findByUserName(userName);
 
-  // console.log(favouriteToDel)
-  // console.log(userName)
-  // console.log(user)
 
   await user.actorFavourites.pull(favouriteToDel);
   await user.save(); 
@@ -199,3 +177,44 @@ router.delete('/:userName/actorFavourites', asyncHandler(async (req, res) => {
 }));
 
 export default router;
+
+
+
+//must watch movies
+
+router.get('/:userName/mustwatch', asyncHandler( async (req, res) => {
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName).populate('mustwatch');
+  res.status(200).json(user.mustwatch);
+}));
+
+
+//Add a favourite
+router.post('/:userName/mustwatch', asyncHandler(async (req, res) => {
+  const newFavourite = req.body.id;
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName);
+
+  if (newFavourite === undefined) {
+    res.status(401).json({success: false, msg: 'Please pass movie id.'});
+    return next();
+  }
+  if ( await user.mustwatch.includes(newFavourite)){
+      res.status(401).json({code: 401,msg: 'Movie is already in user\'s mustwatch.'});
+  }else{
+      await user.mustwatch.push(newFavourite);
+      await user.save(); 
+      res.status(201).json(user); 
+  }
+}));
+
+
+router.delete('/:userName/mustwatch', asyncHandler(async (req, res) => {
+  const favouriteToDel = req.body.id;
+  const userName = req.params.userName;
+  const user = await User.findByUserName(userName);
+
+  await user.mustwatch.pull(favouriteToDel);
+  await user.save(); 
+  res.status(201).json(user); 
+}));
