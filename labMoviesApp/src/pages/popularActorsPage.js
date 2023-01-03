@@ -18,7 +18,6 @@ const PopularActorsPage = (props) => {
 
   useEffect(() => {
     if (authContext.isAuthenticated){
-      console.log("Actor page load")
       context.loadFavourites()
     }
   }, [])
