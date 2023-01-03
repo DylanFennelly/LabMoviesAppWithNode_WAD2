@@ -150,6 +150,7 @@ router.get('/:userName/actorFavourites', asyncHandler( async (req, res) => {
 router.post('/:userName/actorFavourites', asyncHandler(async (req, res) => {
   const newFavourite = req.body.id;
   const userName = req.params.userName;
+  const user = await User.findByUserName(userName);
 
   if (newFavourite === undefined) {
     res.status(401).json({success: false, msg: 'Please pass actor id.'});
