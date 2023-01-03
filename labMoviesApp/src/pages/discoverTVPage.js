@@ -18,7 +18,6 @@ const DiscoverTVPage = (props) => {
 
   useEffect(() => {
     if (authContext.isAuthenticated){
-      console.log("tv page load")
       context.loadFavourites()
     }
   }, [])

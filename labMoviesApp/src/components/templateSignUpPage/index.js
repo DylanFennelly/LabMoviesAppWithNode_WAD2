@@ -8,8 +8,6 @@ import Button from "@mui/material/Button";
 
 import { AuthContext } from "../../contexts/authContext"
 
-//TODO: Error message for failed login, wrong password
-
 const TemplateLoginPage = props => {
     const context = useContext(AuthContext)
     const [userName, setUserName] = useState("");

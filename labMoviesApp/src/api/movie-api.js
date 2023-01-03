@@ -20,7 +20,6 @@ export const signup = (username, password) => {
 };
 
 export const getFavourites = (username) => {
-    // console.log("getFavourites")
     return fetch('/api/users/'+username+'/favourites').then(res => res.json())
 }
 
@@ -88,7 +87,6 @@ export const removeFavourite = (username, movieId) =>  {
 
 
   export const getTVFavourites = (username) => {
-    // console.log("getFavourites")
     return fetch('/api/users/'+username+'/tvFavourites').then(res => res.json())
 }
 
@@ -114,7 +112,6 @@ export const removeTVFavourite = (username, tvId) =>  {
 
 
   export const getActorFavourites = (username) => {
-    // console.log("getFavourites")
     return fetch('/api/users/'+username+'/actorFavourites').then(res => res.json())
 }
 
@@ -139,7 +136,6 @@ export const removeActorFavourite = (username, actorId) =>  {
   }
 
   export const getMustWatch = (username) => {
-    // console.log("getFavourites")
     return fetch('/api/users/'+username+'/mustwatch').then(res => res.json())
 }
 

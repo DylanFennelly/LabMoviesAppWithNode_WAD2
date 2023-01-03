@@ -36,7 +36,6 @@ async function loadGenres() {
 // deletes all movies documents in collection and inserts test data
 export async function loadMovies() {
   console.log('load seed data');
-  console.log(movies.length);
   try {
     await movieModel.deleteMany();
     await movieModel.collection.insertMany(movies);

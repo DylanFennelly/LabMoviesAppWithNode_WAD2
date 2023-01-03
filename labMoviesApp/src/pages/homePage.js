@@ -18,7 +18,6 @@ const HomePage = (props) => {
 
   useEffect(() => {
     if (authContext.isAuthenticated){
-      console.log("home page load")
       context.loadFavourites()
     }
   }, [])  //https://css-tricks.com/run-useeffect-only-once/
