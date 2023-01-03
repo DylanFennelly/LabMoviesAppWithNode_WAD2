@@ -67,3 +67,10 @@ export const removeFavourite = (username, movieId) =>  {
        '/api/movies/tmdb/top'
     ).then(res => res.json());
   };
+
+  export const getDiscoverTV = () => {
+    return fetch(
+       '/api/movies/tmdb/tv'
+    ).then(res => res.json());
+  };
+

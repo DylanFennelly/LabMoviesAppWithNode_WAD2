@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { getGenres } from "../../api/tmdb-api";
+import { getGenres } from "../../api/movie-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 import Fab from "@mui/material/Fab";
@@ -51,7 +51,7 @@ const FantasyMovieForm = () => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const genres = data.genres;
+  const genres = data;
 
   //https://stackoverflow.com/questions/16215771/how-to-open-select-file-dialog-via-js
   var imageSelect = document.createElement('input');

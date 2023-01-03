@@ -27,3 +27,18 @@ export const getTopMovies = () => {
             throw error
         });
 };
+
+export const getDiscoverTV = () => {
+    return fetch(
+        `https://api.themoviedb.org/3/discover/tv?api_key=${process.env.TMDB_KEY}&language=en-US&sort_by=popularity.desc&page=1`
+    ).then((response) => {
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    })
+        .catch((error) => {
+            throw error
+        });
+};
+
