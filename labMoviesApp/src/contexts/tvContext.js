@@ -1,23 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { getTVFavourites, addTVFavourites, removeTVFavourite } from "../api/movie-api";
+import { AuthContext } from "./authContext";
 
 export const TVContext = React.createContext(null);
 
 const TVContextProvider = (props) => {
   const [favourites, setFavourites] = useState([])
 
-  const addToFavourites = (tv) => {
-    let newFavourites = [...favourites];
-    if (!favourites.includes(tv.id)) {
-      newFavourites.push(tv.id);
-    }
-    setFavourites(newFavourites);
+  const context = useContext(AuthContext)
+
+  function loadFavourites(){
+    getTVFavourites(context.userName).then(result =>{
+      setFavourites(result)
+    })
+  }
+
+  const addToFavourites = (tvID) => {
+    addTVFavourites(context.userName, tvID)
+    loadFavourites()
   };
 
   // We will use this function in a later section
-  const removeFromFavourites = (tv) => {
-    setFavourites(favourites.filter(
-      (tId) => tId !== tv.id
-    ))
+  const removeFromFavourites = (tvID) => {
+    removeTVFavourite(context.userName, tvID)
+    loadFavourites()
   };
 
   return (
@@ -26,6 +32,7 @@ const TVContextProvider = (props) => {
         favourites,
         addToFavourites,
         removeFromFavourites,
+        loadFavourites
       }}
     >
       {props.children}

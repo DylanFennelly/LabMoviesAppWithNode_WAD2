@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import PageTemplate from "../components/templateTVListPage";
 import { TVContext } from "../contexts/tvContext";
 import { useQueries } from "react-query";
@@ -8,6 +8,11 @@ import RemoveFromTVFavourites from "../components/cardIcons/removeFromTVFavourit
 
 const FavouriteTVPage = () => {
   const { favourites: tvIds } = useContext(TVContext);
+  const context = useContext (TVContext)
+
+  useEffect(() => {
+    context.loadFavourites()
+  }, [])
 
   // Create an array of queries and run in parallel.
   const favouriteTVQueries = useQueries(
@@ -40,7 +45,6 @@ const FavouriteTVPage = () => {
         return (
           <>
             <RemoveFromTVFavourites tv={tv} />
-            {/* <WriteReview movie={movie} /> */}
           </>
         );
       }}

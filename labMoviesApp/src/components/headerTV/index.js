@@ -9,19 +9,23 @@ import AddToTVFavouritesIcon from "../cardIcons/addToTVFavourites";
 import RemoveFromTVFavouritesIcon from "../cardIcons/removeFromTVFavourites"
 
 import { TVContext } from "../../contexts/tvContext";
+import { AuthContext } from "../../contexts/authContext";
 
 const TVHeader = (props) => {
   const tv = props.tv;
   const navigate = useNavigate();
   const context = useContext(TVContext);
+  const authContext = useContext(AuthContext)
 
   //changes icon and function depending on favourites state of tv
   function favouritesState(tv) {
-    if (!context.favourites.includes(tv.id)) {
-      return <AddToTVFavouritesIcon tv={tv} />
-    } else {
-      return <RemoveFromTVFavouritesIcon tv={tv} />
-    }
+    if (authContext.isAuthenticated){
+      if (!context.favourites.includes(tv.id)) {
+        return <AddToTVFavouritesIcon tv={tv} />
+      } else {
+        return <RemoveFromTVFavouritesIcon tv={tv} />
+      }
+    } 
   }
 
   return (

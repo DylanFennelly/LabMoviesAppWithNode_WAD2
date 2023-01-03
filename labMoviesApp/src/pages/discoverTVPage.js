@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { getDiscoverTV } from "../api/movie-api";
 import PageTemplate from '../components/templateTVListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToTVFavouritesIcon from '../components/cardIcons/addToTVFavourites'
 
+import { AuthContext } from "../contexts/authContext";
+import { TVContext } from "../contexts/tvContext";
+
 
 const DiscoverTVPage = (props) => {
 
   const { data, error, isLoading, isError } = useQuery('discoverTV', getDiscoverTV)
+  const authContext = useContext(AuthContext)
+
+  const context = useContext (TVContext)
+
+  useEffect(() => {
+    if (authContext.isAuthenticated){
+      console.log("tv page load")
+      context.loadFavourites()
+    }
+  }, [])
 
   if (isLoading) {
     return <Spinner />
@@ -19,17 +32,13 @@ const DiscoverTVPage = (props) => {
   }
   const tvs = data.results;
 
-  // Redundant, but necessary to avoid app crashing.
-  const favourites = tvs.filter(m => m.favourite)
-  localStorage.setItem('favourites', JSON.stringify(favourites))
-  const addToFavourites = (tvId) => true
-
   return (
     <PageTemplate
       title="Discover TV Series"
       tvs={tvs}
       action={(tv) => {
-        return <AddToTVFavouritesIcon tv={tv} />
+        if (authContext.isAuthenticated)
+          return <AddToTVFavouritesIcon tv={tv} />
       }}
     />
   );

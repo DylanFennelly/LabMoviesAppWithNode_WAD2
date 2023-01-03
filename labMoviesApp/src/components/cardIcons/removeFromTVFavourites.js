@@ -8,7 +8,8 @@ const RemoveFromTVFavouritesIcon = ({ tv }) => {
 
   const handleRemoveFromFavourites = (e) => {
     e.preventDefault();
-    context.removeFromFavourites(tv);
+    context.removeFromFavourites(tv.id);
+    context.loadFavourites()
   };
   return (
     <IconButton

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { TVContext } from "../../contexts/tvContext";
+
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -8,7 +9,8 @@ const AddToTVFavouritesIcon = ({ tv }) => {
 
   const handleAddToFavourites = (e) => {
     e.preventDefault();
-    context.addToFavourites(tv);
+    context.addToFavourites(tv.id);
+    context.loadFavourites()
   };
 
   return (

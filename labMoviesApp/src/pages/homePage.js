@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-// import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
@@ -22,7 +21,7 @@ const HomePage = (props) => {
       console.log("home page load")
       context.loadFavourites()
     }
-  }, [])
+  }, [])  //https://css-tricks.com/run-useeffect-only-once/
 
   if (isLoading) {
     return <Spinner />
