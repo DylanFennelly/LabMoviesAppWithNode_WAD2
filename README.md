@@ -13,4 +13,4 @@ Node App:   npm init
             npm install --save passport passport-jwt jsonwebtoken bcrypt-nodejs
             npm install express-async-handler --save
             npm install --save uniqid
-            npm install --save node-fetch
+            npm install -s node-fetch@2

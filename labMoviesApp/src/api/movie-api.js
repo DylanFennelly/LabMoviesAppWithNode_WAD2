@@ -55,3 +55,9 @@ export const removeFavourite = (username, movieId) =>  {
        '/api/genres'
     ).then(res => res.json());
   };
+
+  export const getUpcomingMovies = () => {
+    return fetch(
+       '/api/movies/tmdb/upcoming'
+    ).then(res => res.json());
+  };
